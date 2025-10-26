@@ -1,0 +1,94 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{parskip}
+\setlength{\parindent}{0pt}
+\title{Support Vector Machines and Principal Component Analysis}
+\author{}
+\date{October 26, 2025}
+\begin{document}
+\maketitle
+
+A support vector machine is a supervised learning algorithm that classifies data by finding an optimal line or hyperplane that maximizes the distance between each class in an N-dimensional space.
+SVMs are commonly used within classification problems. What I understand is that it differentiates between two sets of classes by determining the optimal hyperplane that maximizes the ``distance'' between closest opposite data points. Let's say there are a group of red points and a group of blue points. It helps choose a point that has the maximum distance between the closest red point and the closest blue point, intuitively. The amount of features in the data decides whether the decision boundary is a simple line (2d data) or a flat surface -- a hyperplane in higher-dimensional spaces. Because there can be many possible boundaries can separate classes, SVM chooses the one that maximizes the distance (or margin) between the closest data points of different classes, ensuring the best separation.
+Linear SVMs used with linearly separable data. Professor Hinton from Massachusetts institute of technology uses the intuitive analogy ``fitting the widest possible street''. Mathematically, this separating hyperplane can be represented as
+\[
+wx + b = 0
+\]
+\[
+w = \text{weight vector}
+\]
+\[
+x = \text{input vector}
+\]
+\[
+b = \text{bias term}.
+\]
+There are 2 approaches to calculating the boundary, hard margin classification and soft margin classification. If we use a hard margin SVM, the data points will be perfectly separated outside of the support vector or ``off the street''. 
+\[
+(wx_j + b) y_j \geq a,
+\]
+and then the margin is maximized which is represented as: 
+\[
+\max \gamma = a / ||w||
+\]
+where \( a \) is the margin projected onto \( w \).
+Soft-margin classification is lenient, facilitating for some misclassification.
+Advantages are
+\begin{enumerate}
+    \item Works well in high dimensional spaces
+    \item Effective when classes have clear separation
+    \item Maximizes margin that often gives good generalization on unseen data
+\end{enumerate}
+Disadvantages:
+\begin{enumerate}
+    \item Can be slow on large datasets
+    \item Sensitive to noise and overlapping classes
+    \item Hard to interpret compared to simpler models
+\end{enumerate}
+Large datasets are common and often difficult to interpret. Principal component analysis (PCA) is a technique for reducing the dimensionality of such datasets, increasing interpretability but at the same time minimizing information loss. It does that by creating new unrelated variables that maximize variance. Finding such new variables, the principal components, reduces to solving an eigenvalue/eigenvector problem, and the new variables are defined by the dataset at hand are unique and unparalleled. What I understand is that it enables you to convert, let's say, a 3d data shaped like a flat sheet in space, so PCA rotates the axes to align with the ``sheet'' and allows you to drop one axis without losing much info.
+Let's say
+\[
+X= \begin{bmatrix}
+x_{11},x_{12},x_{13}\dots x_{1d} \\
+x_{21},x_{22},x_{23}\dots x_{2d} \\
+. \\
+. \\
+x_{n1},x_{n2},x_{n3}\dots x_{nd}
+\end{bmatrix}
+\]
+Compute the mean of each feature:
+\[
+\text{mean}_{ij} = \left( \sum_{i=1}^n x_{ij} \right) /n
+\]
+Then center the data by subtracting the mean:
+\[
+X_{\text{centered}} = X - \text{mean}
+\]
+The covariance matrix shows how features vary together:
+\[
+\text{Covariance matrix} = (1/n) \times \text{transpose}(X_{\text{centered}}) \times X_{\text{centered}}
+\]
+Diagonal elements: variance of each feature
+Off-diagonal elements: covariance between features
+Highly correlated features can be combined into fewer components.
+Find eigenvectors and eigenvalues of the covariance matrix. Sort eigenvectors by largest eigenvalue first. The first principal component captures the most variance.
+Form a matrix \( V_k \) from the top \( k \) eigenvectors (columns).
+\[
+X_{\text{reduced}} = X_{\text{centered}} \times V_k
+\]
+Axes with low variance are discarded which implies reduces dimensions
+Advantages are 
+\begin{enumerate}
+    \item Reduces number of features which makes things simpler.
+    \item Useful for visualization in 2d and 3d data
+    \item Can denoise data by ignoring small variance components
+\end{enumerate}
+Disadvantages are
+\begin{enumerate}
+    \item if low-variance features are actually meaningful, can lose important information
+    \item PCA is linear and cannot handle non-linear relationships
+\end{enumerate}
+
+\end{document}
