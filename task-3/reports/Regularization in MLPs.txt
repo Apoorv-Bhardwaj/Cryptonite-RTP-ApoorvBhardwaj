@@ -1,0 +1,31 @@
+Regularization in MLPs
+
+Overfitting is when model memorizes training noise which results in much better results in train and higher results in test data.
+Underfitting is when model misses patterns. It is essentially too simple with high errors everywhere and high bias.
+Regularization balances bias-variance by penalizing complexity which results in better generalization.
+
+Core Regularization
+Add penalty to loss: Loss = Empirical Loss + λ * Reg Term
+Empirical Loss: MSE = (1/n) ∑ (y_i - ŷ_i)^2; CE = -∑ y_i log(ŷ_i).
+λ tunes penalty strength.
+
+L1 (Lasso) is a penalty proportional to the absolute values of the weights used. This implies larger weights are punished more. This encourages model to use fewer more important weights.
+Total Loss = Loss + λ ∑ |w_i|
+
+L2 is similar to L1 but shrinks weights proportionally (no exact zeroes are created)
+Total Loss = Loss + (λ/2) ∑ w_i^2
+
+Dropout as name suggests disables or deactivates neurons during training to prevent over reliance on specific paths. This reduces overfitting by adding noise and forcing robustness
+Train: h'_i = f(∑ w_{ij} h_j) * m_i, m_i ~ Bern(p)
+Infer: h'_i = p * f(∑ w_{ij} h_j)
+
+BatchNorm normalizes layer inputs by creating small batches and stabalizes training by  mitigating distribution changes across layers. It adds small noise for regularization which allows better learning rates.
+μ_B = (1/m) ∑ x_i; σ_B² = (1/m) ∑ (x_i - μ_B)²
+x̂_i = (x_i - μ_B) / √(σ_B² + ε); y_i = γ x̂_i + β
+
+Layernorm normalizes across hidden dimensions per sample independent of batch size. It reduces overfitting.
+
+Early stopping as name suggests stops training when validation loss plateaus. This prevents overfitting by limiting the no of epochs.
+If L_val < best: Update best, reset counter
+Else: counter +=1; if counter >= patience: Stop
+

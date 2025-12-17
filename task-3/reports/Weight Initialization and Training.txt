@@ -1,0 +1,114 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\begin{document}
+
+\section*{Weight Initialization and Training Stability}
+
+Sometimes the model can suffer due to gradients that become too small that results in slow learning or explode and become huge and cause divergence. This arises from repeated multiplications in backdrop and is compounded by functions.
+
+Vanishing or Exploding gradients occur when updates near zero or huge number or not a number error occur. Both hinder our progress.
+
+Weight Initialization is random init set starting weights to break symmetry and scale variances properly across layers. Poor init leads to identical outputs but variance tuned methods preserve signal
+
+Basic:
+\[
+w \sim U\left(-\sqrt{\frac{6}{n_{in} + n_{out}}}, \sqrt{\frac{6}{n_{in} + n_{out}}}\right)
+\]
+
+Goal:
+\[
+\text{Var}(z_l) \approx \text{Var}(a_{l-1})
+\]
+
+Xavier Initialization balances forward or backward variance for symmetric activations assuming linear regime. Keeps activations/grads almost $O(1)$ variance, preventing vanishing in deep nets.
+
+For layer with $n_{in}$ inputs and $n_{out}$ outputs
+\[
+w_{ij} \sim U\left(-\sqrt{\frac{6}{n_{in} + n_{out}}}, \sqrt{\frac{6}{n_{in} + n_{out}}}\right)
+\]
+
+Derives from:
+\[
+\text{Var}(z) = n_{in} \cdot \text{Var}(w) \cdot \text{Var}(a) = 1 \quad (\text{assuming } f' \approx 1)
+\]
+
+He Initialization suits relu like activations doubling variance to account for half rectified outputs. Maintains forward variance = 1.
+
+\[
+w_{ij} \sim \mathcal{N}\left(0, \sqrt{\frac{2}{n_{in}}}\right)
+\]
+
+or
+
+\[
+w_{ij} \sim U\left(-\sqrt{\frac{6}{n_{in}}}, \sqrt{\frac{6}{n_{in}}}\right)
+\]
+
+From:
+\[
+\text{Var}(a_l) \approx \frac{1}{2} \text{Var}(z_l) \text{ for ReLU}
+\]
+
+\[
+\Rightarrow \text{Var}(z_l) = 2 \cdot \text{Var}(a_{l-1})
+\]
+
+Relu and dying rely
+
+relu is simple non saturating (grad = 1 if active), speeding training. Dying relu is when neurons stuck at zero if weights push $z < 0$ and gradients = 0 forever and is mitigated by leaky relu.
+
+ReLU:
+\[
+f(z) = \max(0, z), \quad
+f'(z) =
+\begin{cases}
+1 & z > 0 \\
+0 & z \le 0
+\end{cases}
+\]
+
+Leaky:
+\[
+f(z) =
+\begin{cases}
+z & z \ge 0 \\
+\alpha z & z < 0
+\end{cases}
+\quad
+f'(z) =
+\begin{cases}
+1 & z \ge 0 \\
+\alpha & z < 0
+\end{cases}
+\]
+
+Dying risk: If $P(z < 0)$ high, use He init ($\sim 50\%$ active)
+
+Gradient Clipping clips gradient to a max norm to prevent exploding stabalizing MLPs during optimization. It doesn't change direction just scales.
+
+\[
+g = \nabla_{\theta} L
+\]
+
+\[
+\text{if } \|g\| > c: \quad g \leftarrow g \cdot \left(\frac{c}{\|g\|}\right) \quad \text{(norm clip)}
+\]
+
+or
+
+\[
+|g_i| \leftarrow \min(|g_i|, c) \quad \text{(value clip)}
+\]
+
+Update:
+\[
+\theta \leftarrow \theta - \eta g'
+\]
+
+Monitor $\|g\|$ before/after
+
+\end{document}

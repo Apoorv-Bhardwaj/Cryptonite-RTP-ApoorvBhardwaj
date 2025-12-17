@@ -1,0 +1,49 @@
+\documentclass[11pt]{article}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{verbatim}
+
+\begin{document}
+
+\section*{Backpropagation \& Gradient-Based Optimization}
+
+\begin{verbatim}
+It is basically to teach the network how to change its weights so predictions get closer to targets.
+Forward pass is to compute outputs from inputs through layers z = xW + b, a = φ(z).
+
+Loss function is to single number measuring error. The trainer minimizes it.
+
+Backpropagation: uses the chain rule to compute how the loss changes w.r.t each weight (∂L/∂w). That gradient tells us direction to change weights to reduce loss.
+
+Mathematical equivalent
+
+If the loss is L, gradient secrent update for weight w is:
+
+𝑤 ← 𝑤 − 𝜂(∂𝐿/∂𝑤)
+where η is the learning rate.
+
+MSE (regression), Binary cross-entropy are among some famous common loss functions.
+
+Optimizers include SGD  which has basic updates which is noisy but simple.
+
+Momentum optimization accumulates velocity to smooth updates.
+v ← μv + η∇L and  w ← w - v 
+
+RMSprop scales gradient by running RMS.
+s = βs(t−1) + (1−β)gt^2
+​w←w−η(gt/root(st+ϵ))
+
+​Adam is an advanced optimizer which combines momentum and adaptive scaling to achieve much better results.
+
+Activation functions include
+ReLU is simply max(0,x). It has sparse activations, fast, avoids saturation for positive side.
+
+Sigmoid is smooth, but will saturate for large |x| which results in small gradients.
+
+Softmax is advanced comparatively and produces a probability distribution over classes.
+
+
+​Vanishing is repeated multiplications by small derivatives (sigmoid/tanh) which makes gradients tiny and results in slow learning and longer process times. The oposite is exploding in which gradients become huge causing parameter blow-up. 
+\end{verbatim}
+
+\end{document}
