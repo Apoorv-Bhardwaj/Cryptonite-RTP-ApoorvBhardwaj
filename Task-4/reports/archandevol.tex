@@ -1,0 +1,24 @@
+\section*{2. CNN Architectures \& Evolution}
+
+The history of CNNs is mostly just people finding clever ways to go deeper without the model breaking.
+
+\begin{itemize}
+    \item \textbf{LeNet-5:} The OG. Used for recognizing handwritten digits. Very simple: just a few conv and pooling layers.
+    \item \textbf{AlexNet:} This was the big breakthrough in 2012. It’s like LeNet but much bigger and used ReLU instead of older activation functions, which made it way faster to train.
+    \item \textbf{InceptionNet (GoogLeNet):} Instead of choosing between a 3x3 or 5x5 filter, it uses an ``Inception Module'' that does all of them at once and stacks the results. It used 1x1 convolutions to reduce the number of parameters so it wouldn't explode in size.
+    \item \textbf{ResNet:} When networks get too deep, they actually start performing worse (the degradation problem). ResNet fixed this with Skip Connections (Residual blocks) that let the gradient skip layers. It's basically telling the network, ``if this layer isn't helpful, just pass the previous data through.''
+    \item \textbf{MobileNet:} Designed for phones. It uses Depthwise Separable Convolutions, which splits the math into two cheaper steps, making it super fast and light.
+    \item \textbf{EfficientNet:} Instead of just guessing how deep or wide a network should be, it uses a formula to scale everything (width, depth, resolution) perfectly.
+\end{itemize}
+
+\section*{3. Advanced Training Techniques}
+
+Training a deep model is hard because they love to ``overfit'' (memorize the training data instead of learning).
+
+\begin{itemize}
+    \item \textbf{Data Augmentation:} We artificially create more data by flipping, rotating, or cropping the images we already have. It forces the model to learn the actual object rather than just its position.
+    \item \textbf{Transfer Learning \& Fine-tuning:} You don't always need to train from scratch. You take a model already trained on a massive dataset (like ImageNet) and ``fine-tune'' it on your specific task. It's like a pro athlete learning a new but similar sport.
+    \item \textbf{Batch Normalization:} This normalizes the output of a layer so the next layer doesn't get wild, inconsistent values. It makes training way more stable and faster.
+    \item \textbf{Dropout:} During training, we randomly ``turn off'' some neurons. This stops the model from relying too much on any single path, making it more robust.
+    \item \textbf{Degradation Problem:} As mentioned with ResNet, this is when adding more layers makes the accuracy plateau or drop. Skip connections and good initialization are the main fixes here.
+\end{itemize}

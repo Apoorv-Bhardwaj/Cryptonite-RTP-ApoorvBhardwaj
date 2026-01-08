@@ -1,0 +1,38 @@
+\documentclass{article}
+\usepackage{amsmath}
+
+\begin{document}
+
+\section*{Fundamentals of Convolutional Neural Networks}
+
+CNNs are basically designed to mimic how we see things. Instead of looking at every pixel individually, they look at small patches to find patterns like edges or shapes. 
+
+\subsection*{The Convolution Operation}
+Think of a Filter (or Kernel) as a small window (like 3x3) that slides across your image. It does a bit of math at each stop to create a Feature Map.
+
+\begin{equation*}
+Output = \sum (Input \ Pixel \times Filter \ Weight) + Bias
+\end{equation*}
+
+\subsection*{Padding}
+When you slide a filter, the edges get used less than the middle, and the image shrinks. 
+
+\begin{itemize}
+    \item \textbf{Valid Padding:} This just means no padding. The image gets smaller as a result.
+    \item \textbf{Same Padding:} We add zeros around the edges so the output stays the same size as the input.
+\end{itemize}
+
+\subsection*{Strides}
+This is just the ``step size.'' If stride is 1, the filter moves one pixel. If it is 2, it jumps two, which makes the output map smaller. 
+
+\begin{equation*}
+Output \ Size = \frac{Input \ Size - Filter \ Size + 2 \times Padding}{Stride} + 1
+\end{equation*}
+
+\subsection*{Pooling}
+This is for downsampling. \textbf{Max Pooling} takes the biggest number in a window (catching the most ``active'' feature), while \textbf{Average Pooling} takes the mean. It helps the network be less sensitive to exactly where a feature is.
+
+\subsection*{Volumes}
+Images arent just flat; they have depth (like Red, Green, Blue channels). So, a 3x3 filter is actually a 3x3x3 cube that slides through the whole ``volume'' of the image data.
+
+\end{document}

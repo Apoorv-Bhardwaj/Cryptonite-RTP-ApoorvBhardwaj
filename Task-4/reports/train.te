@@ -1,0 +1,13 @@
+\section*{3. Advanced Training Techniques}
+
+Training a deep model is hard because they love to ``overfit'' (memorize the training data instead of learning).
+
+
+
+\begin{itemize}
+    \item \textbf{Data Augmentation:} We artificially create more data by flipping, rotating, or cropping the images we already have. It forces the model to learn the actual object rather than just its position.
+    \item \textbf{Transfer Learning \& Fine-tuning:} You don't always need to train from scratch. You take a model already trained on a massive dataset (like ImageNet) and ``fine-tune'' it on your specific task. It's like a pro athlete learning a new but similar sport.
+    \item \textbf{Batch Normalization:} This normalizes the output of a layer so the next layer doesn't get wild, inconsistent values. It makes training way more stable and faster.
+    \item \textbf{Dropout:} During training, we randomly ``turn off'' some neurons. This stops the model from relying too much on any single path, making it more robust.
+    \item \textbf{Degradation Problem:} As mentioned with ResNet, this is when adding more layers makes the accuracy plateau or drop. Skip connections and good initialization are the main fixes here.
+\end{itemize}
