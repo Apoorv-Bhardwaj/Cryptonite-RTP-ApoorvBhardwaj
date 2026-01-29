@@ -1,0 +1,18 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+
+\begin{document}
+
+Recurrent Neural Networks are designed to work with sequential data by passing information from one time step to the next through a hidden state. This allows earlier inputs in a sequence to influence later outputs. Basic or ``vanilla'' RNNs can model short-term patterns, but they struggle when sequences become long. This limitation led to the development of more advanced recurrent architectures such as GRUs and LSTMs.
+
+The main reason vanilla RNNs fail on long sequences is the vanishing gradient problem. During training, gradients are propagated backward through time. Because the same weights are used repeatedly at each time step, gradients can shrink exponentially as they move backward. When this happens, the network is unable to learn relationships between distant elements in the sequence. As a result, important long-term information is effectively forgotten.
+
+To address this issue, gated architectures were introduced. Gated Recurrent Units and Long Short-Term Memory networks both use gates to control how information flows through time. GRUs simplify the design by combining memory and hidden state into a single representation, using update and reset gates to decide what information to keep. LSTMs use a more detailed structure that separates long-term memory from the hidden state, giving them greater control over information retention.
+
+An LSTM cell contains a cell state that acts as long-term memory and a hidden state that represents the output at the current time step. The cell state is designed to carry information forward with minimal modification, which helps prevent gradients from vanishing during training. Information is added to or removed from this cell state using gated operations.
+
+The forget gate determines which parts of the previous cell state should be discarded. It outputs values between zero and one, where values close to zero indicate information that should be forgotten and values close to one indicate information that should be retained. The input gate controls what new information should be written to the cell state by deciding which values to update and how strongly to update them. The output gate determines which parts of the cell state should be exposed as the hidden state and used for predictions at the current time step.
+
+By using these gates, LSTMs can learn when to remember information, when to forget it, and when to use it. This design allows LSTMs to model long-range dependencies more effectively than vanilla RNNs and is why they are widely used in tasks such as language modeling, speech recognition, and time-series prediction.
+
+\end{document}
